@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NesCafe</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #f8efef;
+      color: #333;
+    }
+
+    .navbar {
+      background-color: rgba(90, 43, 33, 0.95);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .navbar .title {
+      font-weight: 700;
+      font-size: 26px;
+    
+    }
+
+    .navbar-menu {
+      display: flex;
+      gap: 25px;
+    }
+
+    
+
+    .navbar-menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    .navbar-menu a:hover {
+      color: #ffa277;
+      text-decoration: underline;
+    }
+
+    .imageh1 {
+      position: relative;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .imageh1::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      margin-right: 220;
+      margin-left: 0;
+      width: 100vw;
+      height: 100vh;
+      inset: 0;
+      background: url(https://tse4.mm.bing.net/th/id/OIP.d0CoK8ikhCuLKH0Rft28SgHaEK?pid=Api&P=0&h=180) center center/cover no-repeat;
+      filter: blur(6px) brightness(0.6);
+      z-index: 1;
+    }
+
+    .imageh1-text {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 20px;
+    }
+
+    .imageh1-text h1 {
+      font-size: 3.5em;
+      animation: fadeInDown 1.5s ease;
+      color: rgb(255, 235, 235);
+    }
+
+    .imageh1-text p {
+      font-size: 1.2em;
+      margin: 20px 0;
+      animation: fadeInUp 2s ease;
+    }
+
+     .button {
+      background: #ae6363;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .button:hover {
+      background: #e63946;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 15px;
+      padding: 30px 40px;
+      box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.1);
+      max-width: 950px;
+      margin: 50px auto;
+      line-height: 1.6;
+    }
+
+    .card h1 {
+      font-size: 24px;
+      color: #5a3a2e;
+      border-left: 6px solid #d4a373;
+      padding-left: 12px;
+      margin-bottom: 15px;
+    }
+
+    .card h2 {
+      font-size: 22px;
+      color: #4e2f1e;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      border-left: 5px solid #d4a373;
+      padding-left: 10px;
+    }
+
+    .card p {
+      font-size: 16px;
+      color: #444;
+      margin-bottom: 10px;
+    }
+
+    .card li {
+      margin: 8px 0;
+      font-size: 15px;
+    }
+
+    .card a {
+      color: #2a2929;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .card a:hover {
+      text-decoration: underline;
+      color: #6b342a;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      font-size: 15px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f4ece7;
+      color: #333;
+    }
+
+    h1, h3 {
+      text-align: center;
+      color: #5a3a2e;
+      margin-top: 40px;
+    }
+
+    .produk-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      margin: 30px auto;
+      max-width: 1000px;
+    }
+
+    .produk {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      width: 220px;
+      height: 320px;
+      text-align: center;
+      padding: 15px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .produk:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .produk img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .nama-produk {
+      font-weight: bold;
+      margin: 10px 0 5px;
+      color: #4a2f2f;
+    }
+
+    .produk p {
+      font-size: 13px;
+      margin: 5px 0;
+    }
+
+    .harga {
+      color: #b03164;
+      font-size: 14px;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    .button-link {
+      display: inline-block;
+      background-color: #e6bba7;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .button-link:hover {
+      background-color: #c39a7a;
+      color: #3b2b1e;
+    }
+
+     form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+      margin-top: 5px;
+    }
+
+     button {
+      background-color: #6b4b23;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+     
+    }
+
+    button:hover {
+      background-color: #b18b33;
+    }
+
+    #pesanTerimakasih {
+      font-weight: bold;
+      color: brown;
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    #pesanBatal {
+      font-weight: bold;
+      color: red;
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    footer {
+      background-color: #3b1e14;
+      color: white;
+      text-align: center;
+      padding: 10px 10px;
+      margin-top: 60px;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+  <div class="title">NesCafe</div>
+  <div class="navbar-menu">
+  <a href="#beranda">Beranda</a>
+  <a href="#tentang">Tentang Kami</a>
+  <a href="#produk">Produk</a>
+  <a href="#kontak">Kontak</a>
+  </div>
+  </div>
+ 
+  <section id="beranda" class="imageh1">
+    <div class="imageh1-text">
+      <h1>Temukan Rasanya</h1>
+      <p>Dari biji terbaik, tercipta kenikmatan yang tak tergantikan</p>
+      <a href="#produk" class="button">Lihat Produk</a>
+    </div>
+  </section>
+  </section>
+  
+  <section id="tentang">
+  <div class="card">
+    <h1>Tentang Kami</h1>
+    <p>Selamat datang di <b>NesCafe</b> — tempat terbaik untuk menikmati kopi hangat dengan suasana nyaman dan estetik. Kami menyajikan berbagai pilihan kopi berkualitas serta menu lezat, mulai dari camilan ringan hingga makanan penutup manis. Dengan pelayanan ramah dan suasana hangat, kami ingin menjadi ruang favorit untuk setiap momen istimewa Anda.</p>
+    <h1>Visi & Misi</h1>
+    <p><b>Visi:</b></p>
+    <ul>
+      <li>Menjadi tempat ngopi terbaik yang menghadirkan rasa nyaman, kebersamaan, dan kehangatan di setiap kunjungan.</li>
+    </ul>
+    <p><b>Misi:</b></p>
+    <ul>
+      <li>Menyajikan kopi dan makanan berkualitas dengan pelayanan ramah.</li>
+      <li>Menciptakan ruang nyaman bagi semua kalangan.</li>
+      <li>Mendukung produk lokal dengan bahan terbaik dari petani kopi Indonesia.</li>
+    </ul>
+
+    <h1>Jam Operasional</h1>
+    <table>
+      <tr>
+        <th>Hari</th>
+        <th>Jam</th>
+      </tr>
+      <tr>
+        <td>Senin - Jumat</td>
+        <td>16.00 - 21.00</td>
+      </tr>
+      <tr>
+        <td>Sabtu - Minggu</td>
+        <td>15.00 - 22.00</td>
+      </tr>
+    </table>
+
+    <h1>Pelayanan & Fasilitas</h1>
+    <p>Kami menyediakan Wi-Fi gratis, colokan listrik di setiap meja, serta area outdoor yang sejuk untuk menikmati kopi Anda.</p>
+  </div>
+  </section>
+
+  <section id="produk">
+  <h1>Daftar Produk Nescafe</h1>
+  <h3>Minuman</h3>
+  <div class="produk-container">
+    <div class="produk">
+      <img src="https://tse4.mm.bing.net/th/id/OIP.KpmAQgdzloP-_eM58Z51wwHaE8?pid=Api&P=0&h=180" alt="Kopi Latte">
+      <div class="nama-produk">Kopi Latte</div>
+      <p>Perpaduan lembut antara kopi dan susu yang seimbang.</p>
+      <div class="harga">Rp 35.000,-</div>
+    </div>
+
+    <div class="produk">
+      <img src="https://tse2.mm.bing.net/th/id/OIP.zKf6u-GkZ-2iqThTa1v2pgHaHa?pid=Api&P=0&h=180" alt="Nescafe Latte">
+      <div class="nama-produk">Nescafe Latte</div>
+      <p>Kopi lembut dengan susu oat yang creamy.</p>
+      <div class="harga">Rp 27.000,-</div>
+    </div>
+
+    <div class="produk">
+      <img src="NesCafe.png" alt="Americano">
+      <div class="nama-produk">Americano</div>
+      <p>Kopi hitam dengan cita rasa klasik dan kuat.</p>
+      <div class="harga">Rp 22.000,-</div>
+    </div>
+
+    <div class="produk">
+      <img src="https://tse2.mm.bing.net/th/id/OIP.aB-qCi9Iqe-ULmLhBhYNAAHaHa?pid=Api&P=0&h=180" alt="Nescafe Ice Roast">
+      <div class="nama-produk">Nescafe Ice Roast</div>
+      <p>Kopi dingin dengan sentuhan creamer lembut.</p>
+      <div class="harga">Rp 35.000,-</div>
+    </div>
+  </div>
+
+  <h3>Makanan</h3>
+  <div class="produk-container">
+    <div class="produk">
+      <img src="https://tse2.mm.bing.net/th/id/OIP.7EhSo4Z5f880fCmtEfoTNwHaIq?pid=Api&P=0&h=180" alt="Klepon Cake">
+      <div class="nama-produk">Klepon Cake</div>
+      <p>Kue lembut dengan rasa kelapa dan gula merah khas Indonesia.</p>
+      <div class="harga">Rp 28.000,-</div>
+    </div>
+
+    <div class="produk">
+      <img src="https://tse3.mm.bing.net/th/id/OIP.YhV1cuyRBZBNvjIRkpS4egHaGn?pid=Api&P=0&h=180" alt="Lemon Tart">
+      <div class="nama-produk">Lemon Tart</div>
+      <p>Kue tart dengan rasa asam manis yang menyegarkan.</p>
+      <div class="harga">Rp 42.000,-</div>
+    </div>
+
+    <div class="produk">
+      <img src="https://tse4.mm.bing.net/th/id/OIP.ArPgw_JVtntN3Fh7xGMMSgHaHa?pid=Api&P=0&h=180" alt="French Fries">
+      <div class="nama-produk">French Fries</div>
+      <p>Camilan klasik dengan kentang goreng renyah.</p>
+      <div class="harga">Rp 23.000,-</div>
+    </div>
+
+    <div class="produk">
+      <img src="https://tse2.mm.bing.net/th/id/OIP.9zEoX0bYgJ2iOOy9AInoKgHaFU?pid=Api&P=0&h=180" alt="Roti Bakar">
+      <div class="nama-produk">Roti Bakar</div>
+      <p>Roti panggang hangat dengan berbagai topping manis.</p>
+      <div class="harga">Rp 25.000,-</div>
+    </div>
+  </div>
+
+   <div class="card">
+    <h1>Daftar Menu Lengkap</h1>
+    <table>
+      <tr>
+        <th>No</th>
+        <th>Nama Menu</th>
+        <th>Kategori</th>
+        <th>Harga</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Kopi Latte</td>
+        <td>Minuman</td>
+        <td>Rp 35.000,-</td>
+      </tr>
+       <tr>
+        <td>2</td>
+        <td>Nescafe Latte</td>
+        <td>Minuman</td>
+        <td>Rp 27.000,-</td>
+      </tr>
+       <tr>
+        <td>3</td>
+        <td>Americano</td>
+        <td>Minuman</td>
+        <td>Rp 25.000,-</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Nescafe Ice Roast</td>
+        <td>Minuman</td>
+        <td>Rp 33.000,-</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Klepon Cake</td>
+        <td>Makanan</td>
+        <td>Rp 28.000,-</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Lamon Tart</td>
+        <td>Makanan</td>
+        <td>Rp 42.000,-</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>French Fries</td>
+        <td>Makanan</td>
+        <td>Rp 23.000,-</td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td>Roti Bakar</td>
+        <td>Makanan</td>
+        <td>Rp 25.000,-</td>
+      </tr>
+    </table>
+  </div>
+  </section>
+
+  <section id="kontak">
+  <div class="card">
+    <h2>Alamat & Kontak</h2>
+    <ul>
+      <li>📍 Jl. Kenari No.14, Tanjung Enim</li>
+      <li>📞 <a href="tel:083802768799">0838-0276-8799</a></li>
+    </ul>
+
+  </div>
+  </section>
+
+    <div class="card">
+    <h1>Reservasi Meja - NesCafe</h1>
+    <form id="formReservasi">
+      <label for="nama">Nama Pemesan:</label>
+      <input type="text" id="nama" name="nama" placeholder="Masukkan nama Anda" required><br>
+      <label for="telepon">Nomor WhatsApp:</label>
+      <input type="number" id="telepon" name="telepon" placeholder="Contoh: 0838xxxxxxx" required><br>
+      <label for="tanggal">Tanggal Reservasi:</label>
+      <input type="date" id="tanggal" name="tanggal" required><br>
+      <label for="waktu">Waktu Kedatangan:</label>
+      <input type="time" id="waktu" name="waktu" required><br>
+      <label for="jumlah">Jumlah Orang:</label>
+      <select id="jumlah" name="jumlah"><br>
+        <option value="">Pilih jumlah tamu</option>
+        <option>1 orang</option>
+        <option>2 orang</option>
+        <option>3 orang</option>
+        <option>4 orang</option>
+        <option>5 orang atau lebih</option>
+      </select><br>
+      <label for="catatan">Catatan Tambahan:</label>
+      <textarea id="catatan" name="catatan" rows="3" placeholder="Contoh: meja dekat jendela, acara ulang tahun, dll"></textarea><br><br>
+      <button id="tombolReservasi" type="submit">Pesan Sekarang</button>
+    </form>
+    <p id="pesanTerimakasih"></p>
+    <p id="pesanBatal"></p>
+  </div>
+
+ <script>
+  var form = document.getElementById("formReservasi");
+  var pesanTerimakasih = document.getElementById("pesanTerimakasih");
+  var pesanBatal = document.getElementById("pesanBatal");
+
+  form.addEventListener("submit", function(event) {
+    event.preventDefault();
+    var nama = document.getElementById("nama").value;
+    var tanggal = document.getElementById("tanggal").value;
+    var waktu = document.getElementById("waktu").value;
+    var jumlah = document.getElementById("jumlah").value;
+
+    var konfirmasi = confirm("Apakah Anda yakin ingin melakukan reservasi meja ini?");
+    if (konfirmasi) {
+      pesanTerimakasih.innerHTML =
+        "Terima kasih <b>" + nama + "</b>! Reservasi Anda untuk <b>" + jumlah +
+        "</b> pada <b>" + tanggal + "</b> pukul <b>" + waktu + "</b> telah diterima.";
+      pesanBatal.innerHTML = "";
+    } else {
+      pesanBatal.innerHTML = "Reservasi dibatalkan.";
+      pesanTerimakasih.innerHTML = "";
+    }
+  });
+</script>
+
+  <footer>
+    © 2025 NesCafe.
+  </footer>
+
+</body>
+</html>
